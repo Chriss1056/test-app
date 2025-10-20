@@ -21,7 +21,7 @@ export default function Index() {
     const Fallback = () => <SectionNotFound tab={activeTab} />;
 
     return lazyWithFallback(
-      () => import(`../components/_index/section-${activeTab}.tsx`),
+      () => import(`../components/rechnungsmanagement/section-${activeTab}.tsx`),
       Fallback
     );
   }, [activeTab]);

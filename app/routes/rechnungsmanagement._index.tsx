@@ -14,17 +14,19 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 export default function Index() {
-  const [activeTab, setActiveTab] = useState('Tab1');
   const tabs = ['Tab1', 'Tab2', 'Tab3', 'Tab4', 'Tab5'];
+
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const activeTab = tabs[activeTabIndex];
 
   const ActiveComponent = useMemo(() => {
     const Fallback = () => <SectionNotFound tab={activeTab} />;
 
     return lazyWithFallback(
-      () => import(`../components/rechnungsmanagement/section-${activeTab}.tsx`),
+      () => import(`../components/rechnungsmanagement/section-${activeTabIndex}.tsx`),
       Fallback
     );
-  }, [activeTab]);
+  }, [activeTab, activeTabIndex]);
 
   return (
     <s-page heading="Test APP">
@@ -33,11 +35,11 @@ export default function Index() {
       </s-banner>
       <s-stack gap="base">
         <s-stack direction="inline" gap="base">
-          {tabs.map((tab) => (
+          {tabs.map((tab, index) => (
             <s-button
               key={tab}
               variant={tab === activeTab ? 'secondary' : 'tertiary'}
-              onClick={() => setActiveTab(tab)}
+              onClick={() => setActiveTabIndex(index)}
             >
               {tab}
             </s-button>

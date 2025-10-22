@@ -29,7 +29,7 @@ export default function Index() {
   }, [activeTab, activeTabIndex]);
 
   return (
-    <s-page heading="Test APP">
+    <s-page heading="Rechnungsmanagement">
       <s-banner heading="Development Notice" tone="warning">
         This App is still under Development.
       </s-banner>

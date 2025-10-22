@@ -13,7 +13,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 export default function Index() {
   return (
-    <s-page heading="Test APP">
+    <s-page heading="Einstellungen">
       <s-section padding="none" accessibilityLabel="Puzzles table section">
   <s-table>
     <s-grid slot="filters" gap="small-200" gridTemplateColumns="1fr auto">

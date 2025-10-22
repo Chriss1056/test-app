@@ -1,8 +1,8 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "9cd2541ae5a7d7d846409f43235a48e3"
-name = "test-name"
-application_url = "https://shopify-server.scipnet.org"
+name = "PUMPSHOT"
+application_url = "https://pumpshot.shopify.scipnet.org"
 embedded = true
 
 [build]
@@ -28,4 +28,4 @@ api_version = "2025-10"
 scopes = "read_orders"
 
 [auth]
-redirect_urls = [ "https://shopify-server.scipnet.org/api/auth" ]
+redirect_urls = [ "https://pumpshot.shopify.scipnet.org/api/auth" ]

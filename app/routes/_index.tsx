@@ -14,7 +14,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 export default function Index() {
-  const tabs = ['Tab1', 'Tab2', 'Tab3', 'Tab4', 'Tab5'];
+  const tabs = ['Tab1', 'Tab2'];
 
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const activeTab = tabs[activeTabIndex];

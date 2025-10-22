@@ -14,6 +14,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export default function Index() {
   return (
     <s-page heading="Einstellungen">
+      <s-banner heading="Development Notice" tone="warning">
+        This App is still under Development.
+      </s-banner>
       <s-section padding="none" accessibilityLabel="Puzzles table section">
   <s-table>
     <s-grid slot="filters" gap="small-200" gridTemplateColumns="1fr auto">

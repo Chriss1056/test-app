@@ -1,6 +1,6 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
-client_id = "9cd2541ae5a7d7d846409f43235a48e3"
+client_id = "975ab589ddc019e57a6c852d2de26031"
 name = "PUMPSHOT"
 application_url = "https://pumpshot.shopify.scipnet.org"
 embedded = true

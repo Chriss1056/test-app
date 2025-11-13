@@ -177,17 +177,15 @@ export default function Index() {
 
     switch (updatedItem.inputMode) {
       case 'net':
-        updatedItem.net = clamp(updatedItem.net * factor, 0);
         updatedItem.gross = updatedItem.net * (1 + updatedItem.tax / 100);
-        updatedItem.lineTotalGross = updatedItem.gross * clamp(updatedItem.quantity, 1);
+        updatedItem.lineTotalGross = updatedItem.gross * clamp(updatedItem.quantity, 1) * factor;
         break;
       case 'gross':
-        updatedItem.gross = clamp(updatedItem.gross * factor, 0)
         updatedItem.net = updatedItem.gross / (1 + updatedItem.tax / 100);
-        updatedItem.lineTotalGross = updatedItem.gross * clamp(updatedItem.quantity, 1);
+        updatedItem.lineTotalGross = updatedItem.gross * clamp(updatedItem.quantity, 1) * factor;
         break;
       case 'lineTotalGross':
-        updatedItem.gross = updatedItem.lineTotalGross / clamp(updatedItem.quantity, 1);
+        updatedItem.gross = (updatedItem.lineTotalGross / clamp(updatedItem.quantity, 1)) / factor;
         updatedItem.net = updatedItem.gross / (1 + updatedItem.tax / 100);
         break;
     }
@@ -556,9 +554,9 @@ export default function Index() {
                 <s-table-cell><s-money-field value={item.lineTotalGross.toFixed(2).toString()} onBlur={handleInputChange(index, 'lineTotalGross')} label="Gesamptpreis" labelAccessibilityVisibility="exclusive" /></s-table-cell>
                 <s-table-cell>
                   <s-select value={item.inputMode} onChange={handleInputModeChange(index)} label="Eingabemodus" labelAccessibilityVisibility="exclusive">
-                    <s-option value="net">Net</s-option>
-                    <s-option value="gross">Gross</s-option>
-                    <s-option value="lineTotalGross">Line Total Gross</s-option>
+                    <s-option value="net">Netto</s-option>
+                    <s-option value="gross">Brutto</s-option>
+                    <s-option value="lineTotalGross">Gesamt</s-option>
                   </s-select>
                 </s-table-cell>
                 <s-table-cell><s-button onClick={() => removeItem(index)} variant="tertiary" tone="critical" icon="delete" accessibilityLabel="Remove Item"/></s-table-cell>

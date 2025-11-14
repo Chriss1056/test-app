@@ -37,13 +37,13 @@ export const loader = async ({ request }: { request: Request }) => {
     const data = await response.json();
     const id = data?.data?.shop?.id;
     const mutation = `
-      mutation CreateInvoiceMetafield($namespace: String!, $key: String!, $value: String!, ownerId: String!) {
+      mutation CreateInvoiceMetafield($namespace: String!, $key: String!, $value: String!, $id: ID!) {
         metafieldsSet(metafields: [{
           namespace: $namespace,
           key: $key,
           value: $value,
           type: "single_line_text_field",
-          ownerId: $ownerId
+          ownerId: $id
         }]) {
           metafields {
             id
@@ -58,7 +58,7 @@ export const loader = async ({ request }: { request: Request }) => {
     `;
 
     const createResponse = await admin.graphql(mutation, {
-      variables: { namespace: NAMESPACE, key: KEY, value: (year.toString() + "-0001"), ownerId: id.toString() },
+      variables: { namespace: NAMESPACE, key: KEY, value: (year.toString() + "-00001"), id: id.toString() },
     });
     const createData = await createResponse.json();
     metafield = createData?.data?.metafieldsSet?.metafields?.[0];

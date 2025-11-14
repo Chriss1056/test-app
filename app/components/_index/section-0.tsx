@@ -43,16 +43,13 @@ export default function Index() {
     }
     const newTotals: Total = {totalNet: 0, with20: 0, with0: 0, totalGross: 0};
     items.forEach((item) => {
-      const quantity = item.quantity;
-      const net = item.net;
       const tax = item.tax;
+      const total = item.lineTotalGross;
 
-      const lineNet = clamp(quantity * net, 0);
-      const lineGross = clamp(lineNet * (1 + tax / 100), 0);
-      const lineTax = clamp(lineGross - lineNet, 0);
+      const lineTax = clamp(total - (total / (1 + tax / 100)), 0);
 
-      newTotals.totalNet += lineNet;
-      newTotals.totalGross += lineGross;
+      newTotals.totalNet += clamp(total / (1 + tax / 100), 0);
+      newTotals.totalGross += total;
       if (Math.abs(tax) < 1e-9) {
         newTotals.with0 += lineTax;
       } else {
@@ -128,6 +125,7 @@ export default function Index() {
       net: 0,
       gross: 2.19,
       tax: 20,
+      allowDiscount: true,
       discount: 0,
       lineTotalGross: 0,
       inputMode: 'gross',
@@ -143,6 +141,7 @@ export default function Index() {
       net: 0.25,
       gross: 0,
       tax: 0,
+      allowDiscount: false,
       discount: 0,
       lineTotalGross: 0,
       inputMode: 'net',
@@ -158,6 +157,7 @@ export default function Index() {
       net: 0,
       gross: 4.9,
       tax: 20,
+      allowDiscount: true,
       discount: 0,
       lineTotalGross: 0,
       inputMode: 'gross',
@@ -201,6 +201,8 @@ export default function Index() {
       updatedItem[field] = parseFloat(value);
     } else if (field === 'net' || field === 'gross' || field === 'lineTotalGross') {
       updatedItem[field] = parseFloat(value);
+    } else if (field === 'allowDiscount') {
+      updatedItem[field] = value.toLowerCase() === 'true';
     } else {
       updatedItem[field] = value;
     }
@@ -353,14 +355,6 @@ export default function Index() {
       body,
       styles: { font: 'helvetica', fontSize: 9, cellPadding: 4 },
       headStyles: { fillColor: [245, 245, 245], textColor: [0, 0, 0] },
-      columnStyles: {
-        1: { halign: 'right' },
-        2: { halign: 'right' },
-        3: { halign: 'right' },
-        4: { halign: 'right' },
-        5: { halign: 'right' },
-        6: { halign: 'right' }
-      }
     });
 
     const finY = (doc as jsPDF & { lastAutoTable: { finalY: number } }).lastAutoTable.finalY + 30;
@@ -550,7 +544,7 @@ export default function Index() {
                 <s-table-cell><s-money-field value={item.net.toFixed(2).toString()} onBlur={handleInputChange(index, 'net')} label="Netto Betrag" labelAccessibilityVisibility="exclusive" /></s-table-cell>
                 <s-table-cell><s-money-field value={item.gross.toFixed(2).toString()} onBlur={handleInputChange(index, 'gross')} label="Brutto Betrag" labelAccessibilityVisibility="exclusive" /></s-table-cell>
                 <s-table-cell><s-number-field value={item.tax.toFixed(2).toString()} onBlur={handleInputChange(index, 'tax')} label="Steuer" labelAccessibilityVisibility="exclusive" /></s-table-cell>
-                <s-table-cell><s-number-field value={item.discount.toFixed(2).toString()} onBlur={handleInputChange(index, 'discount')} label="Rabat" labelAccessibilityVisibility="exclusive" /></s-table-cell>
+                <s-table-cell><s-number-field value={item.discount.toFixed(2).toString()} onBlur={handleInputChange(index, 'discount')} label="Rabat" labelAccessibilityVisibility="exclusive" readOnly={!item.allowDiscount}/></s-table-cell>
                 <s-table-cell><s-money-field value={item.lineTotalGross.toFixed(2).toString()} onBlur={handleInputChange(index, 'lineTotalGross')} label="Gesamptpreis" labelAccessibilityVisibility="exclusive" /></s-table-cell>
                 <s-table-cell>
                   <s-select value={item.inputMode} onChange={handleInputModeChange(index)} label="Eingabemodus" labelAccessibilityVisibility="exclusive">

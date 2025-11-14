@@ -12,6 +12,7 @@ interface Item {
   net: number;
   gross: number;
   tax: number;
+  allowDiscount: boolean;
   discount: number;
   lineTotalGross: number;
   inputMode: string;
